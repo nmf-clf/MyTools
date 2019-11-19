@@ -27,7 +27,7 @@ class App extends Component{
 		const { dataSource } = this.state;
 		console.log("page啊啊啊啊::",page,pageSize)
 		console.log(dataSource.length)
-		//data, //当前页展示数据，数组
+		//newData, //当前页展示数据，数组
         //page, //当前页码
         //pageSize, //每页最多显示条数
 		//length, //总的数据条数

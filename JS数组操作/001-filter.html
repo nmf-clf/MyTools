@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组-filter</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+        //注意: 1.不会对空数组进行检测 2.不会改变原始数组
+    //语法:-- array.filter(function(currentValue,index,arr), thisValue)
+    
+    //newData = dataSource.filter((_, index) => index >= startIndex && index <= endIndex);
+    //function filter(currentValue,index,arr){} 接收3个参数
+        //currentValue 必须,当前元素的值
+        //index 可选,当前元素的索引值
+        //arr 可选,当前元素属于的数组对象
+    var arr = [11,22,33,44,55]
+    var newArr = [];
+    var newArr2 = [];
+    newArr = arr.filter((currentValue,index) => index < 2)
+    newArr2 = arr.filter((currentValue,index) => {
+        return index >=2;
+    })
+    console.log("newArr::",newArr)
+    console.log("newArr2::",newArr2)
+
+    var ages = [18,19,20,21,22,50,80]
+    var thisValue = [20,21]
+    function checkAges(age,index){
+        return age > 21 && index >= 5;
+    }
+    var newAges = ages.filter(checkAges,thisValue)
+    console.log("newAges::",newAges)
+
+    //函数this指向，filter方法的最后一个参数的理解
+    //filter 方法传入的最后一个参数 可以改变第一个函数内部的this指向
+    var person = {}
+    function checkPerson(name,age,obj){
+        console.log(111,name,age,obj)
+        function checkPerson2(name,age){
+            console.log(222,this,name,age)
+            this.name = name;
+            this.age = age;
+        }
+        checkPerson2.bind(obj)(name,age)
+        checkPerson2.call(obj,name,age)
+        checkPerson2.apply(obj,[name,age])
+    }
+    checkPerson('niu',250,person)
+    console.log(333,person)
+
+    //var anObj = { a2:"f",a3:"f",af:"e",aa:"e",6:"a",2:"b",f:"8",d:"c",7:"a",01:'1'};
+    var anObj = { 01:'1',02:'2',03:'3' };
+    console.log(Object.keys(anObj))
+    var anObj2 = {a2:"f",a3:"f",af:"e",aa:"e",6:"a",2:"b",f:"8",d:"c",7:"a",01:'1'}
+    for(var key in anObj2){
+        console.log('key::',key)
+    }
+
+    //var arr3 = [5,7,1,66,22,33,55];
+    var obj3 = {a2:"f",a3:"f",af:"e",aa:"e",6:"a",2:"b",f:"8",d:"c",7:"a",01:'1'}
+    function objToArr(){
+        var arr3 = [];
+        for(let i in obj3){
+            let o = {};
+            o[i] = obj3[i]
+            arr3.push(o[i])
+        }
+        return arr3
+    }
+    console.log(6666,objToArr(obj3))
+    console.log("arr3333::",arr3.length)
+    for ( var i = 0; i <arr3.length; i++){
+        console.log("arr3::",arr3[i]);
+    }
+    /* arr3.map((item)=>{
+        console.log('arr3-map::',item)
+    }) */
+   /*  for(var a in arr3){
+        console.log('arr3-forIn::',a)
+    } */
+</script>
+</html>

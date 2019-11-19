@@ -1,9 +1,7 @@
 import React,{ Component } from 'react';
 
-import Item from './Item';
 import TableData from './table';
 import { columns,total } from './data'
-import Test from './Test';
 
 import axios from 'axios';
 
@@ -23,10 +21,6 @@ class App extends Component{
 			ShowData:[],
 			dataSource:[]
 		}
-		this.handleChange = this.handleChange.bind(this);
-		this.handleAdd = this.handleAdd.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
-		console.log('App constructor....');
 		//this.getData(1,10)
 	}
 	getData(page,pageSize){
@@ -75,41 +69,6 @@ class App extends Component{
 		console.log("拿到了吗？？",this.state.ShowData)
 		//return newData;
 	}
-	/*
-	static getDerivedStateFromProps(nextProps, prevState){
-		console.log('App getDerivedStateFromProps',nextProps, prevState)
-	
-		return {
-			list:['bb','cc']
-		}
-	
-		if(prevState.value == 1){
-			return {
-				list:['111']
-			}			
-		}else{
-			return {
-				list:['bb','cc']
-			}			
-		}
-	}
-	*/
-	/*
-	shouldComponentUpdate(nextProps, nextState){
-		console.log('App shouldComponentUpdate',nextProps, nextState)
-		return true;
-	}
-	getSnapshotBeforeUpdate(prevProps, prevState){
-		console.log('App getSnapshotBeforeUpdate',prevProps, prevState)
-		return 111;
-	}
-	componentDidUpdate(prevProps, prevState,snapshot){
-		console.log('App componentDidUpdate',prevProps, prevState,snapshot)
-	}
-	componentDidMount(){
-		console.log('App componentDidMount')
-	}
-	*/
 	componentDidMount(){
 		//发送ajax请求
 		axios
@@ -120,9 +79,6 @@ class App extends Component{
 		})
 		.then((data)=>{
 			console.log('data::',data);
-			// this.setState({
-			// 	list:data.data
-			// })
 			this.setState({
 				dataSource:data.data
 			},()=>{
@@ -135,88 +91,30 @@ class App extends Component{
 		//this.getData(1,10)
 		console.log(777777)
 	}
-	/* componentWillMount(){
-		this.mounted = true;
-		//this.getData(1,10);
-	}
-	
-	componentWillUnmount() {
-		this.mounted = false;
-	} */
-	handleAdd(){
-		// setState方法是一个异步方法
-		this.setState((preState)=>({
-			list:[...preState.list,preState.value],
-			value:''
-		}),()=>{
-			console.log(this.ul.querySelectorAll('li'))
-		});
-		
-	}
-	handleChange(e){
-		// console.log(this.input)
-		// const value = e.target.value;
-		const value = this.input.value;
-		this.setState((preState)=>({
-			value
-		}));
-
-	}
-
-	handleDelete(index){
-
-		this.setState((preState)=>{
-			const list = [...preState.list];
-			list.splice(index,1)
-			return {
-				list
-			}			
-		})	
-	}
-	getItems(){
-		return	this.state.list.map((item,index)=>{
-					return(
-						<Item 
-							key={index} 
-							content={item} 
-							index={index}
-							handleDelete={this.handleDelete}
-						/>	
-					)
-				})
-	}
 	/* showTotal(total) {
 		return `Total ${total} items`;
 	  } */
+	
+	/* static getDerivedStateFromProps(nextProps, prevState){
+		console.log('getDerivedStateFromProps',nextProps, prevState)
+		return {};
+	} */
+
+
 	//必须有一个render方法
 	//JSX语法
 	render(){
 		console.log('App render...')
 		const { ShowData } = this.state;
-		//const ShowData2 = this.getData(1);
-		//console.log("return的data::",ShowData2)
 		//return 只能返回一个
 		return(
 			<div className="App">
-				{/* <input 
-					value={this.state.value} 
-					onChange={this.handleChange} 
-					ref={(input)=>{
-						// console.log(input)
-						this.input = input
-					}}
-				/>
-				<button onClick={this.handleAdd}>新增</button>
-				<ul ref={(ul)=>{this.ul = ul}}>
-					{
-						this.getItems()
-					}
-				</ul> */}
 				<TableData 
 					dataSource={ShowData}
 					columns={columns}
 					total={this.state.total}
 					onChangePage={(page,pageSize)=>{
+						console.log("改变的page+pageSize::",page,pageSize)
 						this.getData(page,pageSize)
 					}}
 				/>

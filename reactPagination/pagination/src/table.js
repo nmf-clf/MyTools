@@ -8,13 +8,10 @@ class TableData extends Component{
 	
 	constructor(props){
         super(props);
-        console.log("表格组件this::",this.page)
 	}
 
 	componentDidMount(){
 	}
-
-	
 
 	render(){
 		const { dataSource,columns } = this.props;
@@ -24,9 +21,9 @@ class TableData extends Component{
                     dataSource={dataSource} 
                     columns={columns}
                     pagination={false}
-                    onChange={(pagination)=>{
-                        console.log("表格上的分页器::",pagination)
-                    }}
+                    // onChange={(pagination)=>{
+                    //     console.log("表格上的分页器::",pagination)
+                    // }}
                 />
                 <Pagination
                     showSizeChanger 
@@ -44,9 +41,14 @@ class TableData extends Component{
                     //pageSize={10} //每页条数
                     onChange={(page,pageSize)=>{ //页码改变的回调，参数是改变后的页码及每页条数
                         console.log("page+pageSize::",page,pageSize)
-                        this.currentPage = page;
-                        this.pageSize = pageSize;   
+                        //this.currentPage = page;
+                        //this.pageSize = pageSize;   
                         this.props.onChangePage(page,pageSize)
+                    }}
+                    onShowSizeChange={(page, pageSize) => {
+                        //this.currentPage = page;
+                        //this.pageSize = pageSize;
+                        this.props.onChangePage(page, pageSize);
                     }}
                 />
             </div>

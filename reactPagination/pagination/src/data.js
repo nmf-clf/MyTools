@@ -1,13 +1,13 @@
-  export const dataSource = [];
+  //export const dataSource = [];
   export const total = 103;
-  for (let i = 0; i < 103; i++) {
-    dataSource.push({
-      key: i,
-      name: `Edward King ${i+1}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`,
-    });
-  }
+  // for (let i = 0; i < 103; i++) {
+  //   dataSource.push({
+  //     key: i,
+  //     name: `Edward King ${i+1}`,
+  //     age: 32,
+  //     address: `London, Park Lane no. ${i}`,
+  //   });
+  // }
   
   export const columns = [
     {

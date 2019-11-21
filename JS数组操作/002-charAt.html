@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>charAt</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var str = '中文最好的中文最好的中文最好的中文最好的中文最好的';
+    var str2 = str.trim();
+    console.log("str2::",str2)
+    function getCharAt(str){
+        var len = 0;
+        for(var i=0; i<str.length; i++){
+            if(str.charAt(i) > '~'){
+                console.log(333)
+                len += 2;
+            }else{
+                console.log(444)
+                len ++;
+            }
+        }
+        console.log(111,len)
+        return len;
+    }
+    getCharAt(str)
+    console.log(222,getCharAt(str2))
+</script>
+</html>

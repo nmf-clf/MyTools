@@ -1,20 +1,22 @@
 const http = require('http');
-const express = require('express');
-const bodyParser = require('body-parser');
+//const express = require('express');
+//const bodyParser = require('body-parser');
 
-const app = express();
+//const app = express();
 
 const server = http.createServer((req,res)=>{
 	res.setHeader("Access-Control-Allow-Origin","*");
 	let data = ['learn react','learn nodejs'];
 	let dataSource = []
 	for(var i=0;i<103;i++){
-		dataSource.push({
-			key: i,
-			name: `Edward King ${i+1}`,
-			age: 32,
-			address: `London, Park Lane no. ${i}`,
-		})
+        dataSource.push({
+            key: i,
+            name: `Edward King ${i+1}`,
+            isadmin:'否',
+            age: 32,
+            email: `4568977${i}@qq.com`,
+            mobliephone: `158248378${i}`
+        })
 	}
 	//res.end(JSON.stringify(data))
 	//console.log("server-data::",data)
@@ -36,6 +38,6 @@ app.use(bodyParser.json());
 app.use("/dataSource",require('./routes/dataSource.js')); */
 
 
-server.listen(3000,'127.0.0.1',()=>{
-	console.log('server is runing at 127.0.0.1:3000')
+server.listen(3005,'127.0.0.1',()=>{
+	console.log('server is runing at 127.0.0.1:3005')
 })

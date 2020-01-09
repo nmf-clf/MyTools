@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NaN值</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var test1="300"
+    var test2="Hello World!"
+    console.log(Number(test1)) //300
+    console.log(Number(test2))  //NaN
+    console.log(isNaN(test1)) //false
+    console.log(isNaN(test2)) //true
+    console.log(isNaN(NaN)) //true
+    console.log(NaN == NaN)
+    console.log([1,2] == [1,2])
+
+    var a = [];  // 定义一个引用空数组的变量a
+    var b = a;   // 变量b引用同一个数组
+    b[0] = 1;    // 通过变量b来修改引用的数组
+    a[0]         // => 1: 变量a也会修改
+    console.log(a)
+    console.log(b)
+    console.log(a === b)      // => true:a和b引用同一个数组，因此它们相等
+</script>
+</html>

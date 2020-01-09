@@ -69,9 +69,9 @@ class MySider extends Component{
                             </NavLink>
                         </Menu.Item>
                         <Menu.Item key="7">
-                            <NavLink to="/pages">
+                            <NavLink to="/components">
                                 <Icon type="upload" />
-                                <span>分页展示</span>
+                                <span>组件管理</span>
                             </NavLink>
                         </Menu.Item>
                     </Menu>

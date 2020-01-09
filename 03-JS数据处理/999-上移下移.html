@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表格操作</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+ 
+        .cme-table {
+            margin: 50px 0 0 50px;
+        }
+ 
+        .cme-table table {
+            border-collapse: collapse;
+        }
+ 
+        .cme-table thead tr th {
+            border: 1px solid #ddd;
+            width: 120px;
+            height: 50px;
+            background: #f5f5f5;
+            font-weight: bold;
+            font-size: 12px;
+            color: #333;
+        }
+ 
+        .cme-table tbody tr td {
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+            height: 30px;
+        }
+ 
+        .cme-table tbody tr:hover {
+            background: #f8f8f8;
+        }
+ 
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class='cme-table'>
+        <div class='cme-fixed-table-container'>
+            <table cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>人员属性</th>
+                        <th>年度</th>
+                        <th>月份</th>
+                        <th>日期</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>7</td>
+                        <td>7</td>
+                        <td>7</td>
+                        <td>7</td>
+                        <td>7</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td class='table-operation'>
+                            <a href="javascript:;" class='up'>上移</a>
+                            <a href="javascript:;" class='down'>下移</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="jquery.js"></script>
+    <script>
+        $(document).on('click', '.up', function () {
+            var ind = $(this).parents('tr').index();
+            if (ind == 0) {
+                alert('已经是最上层了！');
+                return false;
+            }
+            var trs = $(this).parents('tr').clone(true);
+            $(this).parents('table tbody').find('tr').eq(ind - 1).before(trs);
+            $(this).parents('tr').remove();
+            //重新添加序号
+            drawOrder()
+        });
+        $(document).on('click', '.down', function () {
+            var ind = $(this).parents('tr').index();
+            if (($(this).parents("tr").index()) == ($(this).parents("table tbody").find("tr").length - 1)) {
+                alert('已经是最下层了！');
+                return false;
+            }
+            var trs = $(this).parents('tr').clone(true);
+            $(this).parents('table tbody').find('tr').eq(ind + 1).after(trs);
+            $(this).parents('tr').remove();
+            //重新添加序号
+            drawOrder();
+        })
+    </script>
+</body>
+ 

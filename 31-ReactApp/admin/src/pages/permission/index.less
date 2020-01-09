@@ -13,5 +13,19 @@
             width: 100%;
             padding: 10px 20px;
         }
+        //保额输入框的公式图标显示隐藏
+        .iconHide{
+            .ant-input-group > .ant-input:last-child, .ant-input-group-addon:last-child {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                display: none !important;
+            }
+        }
+        .iconShow{
+            .ant-input-group > .ant-input:last-child, .ant-input-group-addon:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            }
+        }
     }
 }

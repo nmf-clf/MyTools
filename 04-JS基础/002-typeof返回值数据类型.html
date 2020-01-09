@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>typeof返回的数据类型</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //typeof的返回值共有七种：
+    //number(数值), boolean(布尔值), string(字符串), undefined(未定义), object(对象), function,symbol
+    
+    //1.number
+    console.log(typeof(10)); //数值
+    console.log(typeof(NaN),NaN); ////NaN在JavaScript中代表的是特殊非数字值,它本身是一个数字类型。
+    console.log(typeof(Infinity),Infinity); //无穷
+    console.log('Number-------------------------------------------------------------------')
+    //2.boolean
+    console.log(typeof(true)); //真
+    console.log(typeof(false)); //假
+    console.log('boolean------------------------------------------------------------------')
+    //3.string
+    console.log(typeof(' a bc ')); 
+    console.log(typeof(`c c c`)); 
+    console.log('string-------------------------------------------------------------------')
+    //4.undefined
+    console.log(typeof(undefined)); 
+    console.log(typeof(abc)); ////不存在的变量
+    console.log('undefined----------------------------------------------------------------')
+    //5.object (对象,数组,null返回object)
+    console.log(typeof(null)); 
+    console.log(typeof(window),window); 
+    console.log(typeof([1,2,3]))
+    console.log(typeof([1,[1.1,2.2],2,3]))
+    console.log(typeof({'a':'1','b':'2','c':'3'}))
+    console.log(typeof({a:1,b:2,c:3}))
+        //测试Object的 key值 类型
+        const obj1 = {'a':'1','b':'2','c':'3'}
+        const obj2 = {a:1,b:2,c:3}
+        const obj3 = {"sites":[
+            {"name":"Runoob", "url":"www.runoob.com"}, 
+            {"name":"Google", "url":"www.google.com"},
+            {"name":"Taobao", "url":"www.taobao.com"}
+        ]}
+        console.log('obj1--->',obj1)
+        for(key in obj1){
+            console.log("key-->",key,typeof(key))
+        }
+        Object.keys(obj1).map((item,index)=>{
+            console.log("item-->",item,typeof(item))
+        })
+        console.log('obj2---->',obj2)
+        for(key in obj2){
+            console.log("key-->",key,typeof(key))
+        }
+        Object.keys(obj2).map((item,index)=>{
+            console.log("item-->",item,typeof(item))
+        })
+        console.log('obj3のobject---->',typeof(obj3),obj3)
+        console.log('obj3のobject转json---->',typeof(JSON.stringify(obj3)),JSON.stringify(obj3))
+        console.log('obj3のjson转object---->',typeof(JSON.parse(JSON.stringify(obj3))),JSON.parse(JSON.stringify(obj3)))
+    console.log('object-------------------------------------------------------------------')
+    //6.function
+    console.log(typeof(Array),Array,'~~',typeof(Array()),Array(1,2)); 
+    console.log(typeof(Date),Date,'~~',typeof(Date()),Date()); 
+    console.log(typeof(Symbol),Symbol,'~~',typeof(Symbol()),Symbol()); 
+    console.log(typeof(function say(){}))
+    console.log(typeof(()=>{}))
+    console.log('function-------------------------------------------------------------------')
+    //7.symbol
+    console.log(typeof(Symbol('foo')),Symbol('foo')); 
+    console.log('symbol-------------------------------------------------------------------')
+    
+    //总结:
+    //Array Date Symbol 均为 function类型 
+    //但是带上() 后执行结果分别为数组,字符串,Symbol(),分别对应typeof值为 object,string,symbol
+
+</script>
+</html>

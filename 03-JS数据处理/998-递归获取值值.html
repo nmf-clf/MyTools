@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>递归</title>
+</head>
+<body>
+    
+</body>
+<script>
+    const arr = [{
+        "benefitName":'1',
+        "children":[{
+            "benefitName":'1-1',
+            "children":[{
+                "benefitName":'1-1-1', 
+                "children":[],
+                "isShow":''
+            }],
+            "isShow":''
+        }],
+        "isShow":''
+    },{
+        "benefitName":'2',
+        "children":[{
+            "benefitName":'2-1',
+            "children":[],
+            "isShow":''
+        }],
+        "isShow":''
+    }]
+    let arrData = []
+    function get(arr){
+        arr.map(item=>{
+            alert('item::',item)
+            if(item&&item.children){
+                item.isShow = '1'
+                arrData.push(item.benefitName)
+                alert(arrData)
+                get(item.children)
+            }else{
+                item.isShow = '1'
+                arrData.push(item.benefitName)
+                alert(arrData)
+            }
+            //arrData.push(item.benefitName)
+        })
+    }
+    get(arr)
+    console.log('arrData::',arrData)
+
+    //先判断Arr是不是数组 是的话 就遍历 item  进行赋值 同时判断每个item里面还有没有 chilren数组，有的话 再去遍历 无限循环
+    // let arrData = []
+    // function fin(obj){
+    //     if(obj instanceof Array){ //如果类型是数组的话就用数组遍历方法
+    //         console.log('为数组::')
+    //     obj.forEach(function(item,index){
+    //         console.log('item::',item)
+    //         if(item instanceof Object){
+    //             arrData.push(item.benefitName)
+    //             fin(item)
+    //         }
+    //     })
+    //     }else if(obj instanceof Object){//如果类型是对象就用对象遍历的方法
+    //         for(var key in obj){
+    //             console.log('进入几次')
+    //             if(key instanceof Object){
+    //                 fin(key)
+    //             }else{
+    //                 if(key=='benefitName'){
+    //                 console.log(obj[key])
+    //                 arrData.push(obj[key])
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // fin(arr)
+    // console.log('arrData::',arrData)
+</script>
+</html>

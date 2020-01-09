@@ -136,6 +136,7 @@ class EditableTable extends React.Component {
   }
 
   handleDelete = key => {
+    console.log('删除的key::',key)
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };

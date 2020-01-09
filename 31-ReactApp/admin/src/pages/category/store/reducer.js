@@ -6,7 +6,6 @@ const defaultState = {
 
 //reducer 是一个 函数
 export default (state=defaultState,action) => { //ES6语法 初始化时如果有state则为state，如果没有则为defaultState
-    console.log('action::',action)
     //在reducer里面接收到了组件里改变的值(组件通过store的dispatch方法发送一个action给store，store再转交于此)
     //于是，我们可以在reducer里面做逻辑处理
     //先比较aciton，再把旧值深copy一份，然后return出去

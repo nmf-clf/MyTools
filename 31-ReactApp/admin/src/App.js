@@ -15,6 +15,7 @@ import Category from 'pages/category';
 import Product from 'pages/product';
 import Order from 'pages/order';
 import Permission from 'pages/permission';
+import Components from 'pages/components';
 
 class App extends Component{
   constructor(props){
@@ -40,6 +41,7 @@ class App extends Component{
             <Route path="/product" component={ Product } />		
             <Route path="/Order" component={ Order } />
             <Route path="/permission" component={ Permission } />
+            <Route path="/components" component={ Components } />
 					</Switch>	
 				</div>		
 			</Router>

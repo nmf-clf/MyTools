@@ -1,11 +1,9 @@
 import React,{ Component } from 'react';
 import { Input, Button, List } from 'antd';
-
-import './index.less';
 import store from './store';
 //引入组件
 import MyLayout from 'common/layout';
-
+import './index.less';
 
 class Category extends Component{
   constructor(props){
@@ -50,6 +48,7 @@ class Category extends Component{
   }
   render(){
     const btn1 = (<Button type="primary" onClick={this.handleAdd}>增加</Button>)
+    console.log('订阅后的state::',this.state)
     return (
       <div className="Category">
           <MyLayout>

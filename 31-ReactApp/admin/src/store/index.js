@@ -2,7 +2,7 @@ import { createStore,applyMiddleware } from 'redux'; //创建一个 store 用来
 import thunk from 'redux-thunk'; //redux-thunk中间件 可以支持store.dispatch()接收函数action
 import { createLogger } from 'redux-logger';//redux-logger中间件 可以实时监控触发action时action的变化及其携带的信息
 //引入 reducer 每个store里面的createStore函数必须引入一个reducer作为参数 否则会报错
-import reducer from './reducer'; //reducer是一个纯函数
+import reducer from './reducer.js'; //reducer是一个纯函数
 
 const middleware = [thunk];
 

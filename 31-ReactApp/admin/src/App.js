@@ -16,6 +16,7 @@ import Product from 'pages/product';
 import Order from 'pages/order';
 import Permission from 'pages/permission';
 import Components from 'pages/components';
+import Tools from 'pages/tools';
 
 class App extends Component{
   constructor(props){
@@ -42,6 +43,7 @@ class App extends Component{
             <Route path="/Order" component={ Order } />
             <Route path="/permission" component={ Permission } />
             <Route path="/components" component={ Components } />
+            <Route path="/tools" component={ Tools } />
 					</Switch>	
 				</div>		
 			</Router>

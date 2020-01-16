@@ -25,11 +25,11 @@ class MySider extends Component{
                     <Menu theme="dark" mode="inline"  
                         //selectedKeys={[selectedKeys]} 
                         onSelect={(selectedKeys)=>{
-                            console.log(111,selectedKeys)
+                            //console.log(111,selectedKeys)
                             this.setState({
                                 selectedKeys:selectedKeys.key
                             })
-                            console.log(222,selectedKeys)
+                            //console.log(222,selectedKeys)
                         }}
                     >
                         <Menu.Item key="1">

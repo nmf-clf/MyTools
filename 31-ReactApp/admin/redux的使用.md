@@ -168,7 +168,7 @@ import { Provider } from 'react-redux';
 import store from './store/index.js'
 ReactDOM.render(
     <Provider store={store}>
-        <APP/>
+        <App/>
     </Provider>,
     document.getElementById('root'));
 2.子组件APP和store建立连接 
@@ -375,7 +375,7 @@ export default App;
     export { reducer,actionCreator }
 ## 9.immutable ##
 1    *npm install immutable --save*
-2    *npm install immutable --save*
+2    *npm install redux-immutable --save*
     import { fromJS } from 'immutable'; //改变的是store的state数据类型、子组件下的reducer
     fromJS.get('key');
     fromJS.set('key',payload)
@@ -385,6 +385,97 @@ export default App;
     import { combineReducers } from 'redux-immutable'; //改变的是??
     
 ## 10.回顾 ##
-    *整个应用只会创建一次store，createStore()也只会绑定一次reducer*
+*   **整个应用只会创建一次store，createStore()也只会绑定一次reducer**
+    **关于connect的使用目前见过有两种情况**
+    *export default connect(mapStateToProps,mapDispatchToProps)(Tools)*
+    *第一种*
+    //此时引入的actionCreator是一个Module对象，对象里为所有创建并导出的aciton
+    import { actionCreator } from './store/actionCreator.js';
+    const mapStateToProps = (state) =>{
+        return{
+            value:state.tools.value,
+            list:state.tools.list
+        }
+    }
+    const mapDispatchToProps = (dispatch) =>{
+        return{
+            changeValue:(e)=>{
+                const action = actionCreator.changeValueAction(e);
+                dispatch(action)
+            }
+        }
+    }
+    export default connect(mapStateToProps,mapDispatchToProps)(Tools)
+    等价于
+    export default connect((state)=>{
+        return{
+            value:state.tools.value
+            //此时，由于使用了combineReducer()方法，store的state下就会生成对应的组件对应的reducer
+        }
+    },(dispatch)=>{
+        return{
+            changeValue:(e)=>{
+                const action = actionCreator.changeValueAction(e);
+                dispatch(action);
+                //首先会创建一个aciton(action是一个对象)
+                //然后通过connect方法派送action给store
+                //由于使用了connect()方法，第二个函数参数默认接收store上的dispatch方法作为参数
+                //函数参数返回一个对象，因而本质上connect方法的两个参数都是对象，
+                //因为connect()方法返回值又是一个函数，因而可以将组件作为参数
+                //目的是将connect()方法的两个对象参数state和函数方法传递到组件的props上,如何做到的还不清楚
+            }
+        }
+    })
+    *第二种*
+    import * as action from './store/actionCreator.js';
+    export default connect((state)=>{
+        return{
+            tools: state.tools.
+        }
+    },action)(Tools);
+    action的本质是 (dispatch)=>{},还是一个函数入参
+    等价于
+    export default connect(null,(dispatch)=>{
+        return (dispatch) =>{
+            try(xxx){
+                let result = await Network.postNetwork(reqParam.url, reqParam.data);
+                if(xxx){
+
+                }
+            }
+        }
+    })
+    组件内使用
+    this.props.tableData(url,()=>{
+
+    })
+    ./store/actionCreator.js内使用
+    export const tableData = (reqParam,callBack) =>{
+        return{
+            try{
+                let result = await Network.postNetwork(reqParam.url, reqParam.data);
+                if(result )
+            }
+        }
+    }
+    *二者的区别::*
+    第一种const mapDispatchToProps = (Dispatch) =>{
+        return{
+            函数名:函数体
+        }
+    }
+    本质上是把返回的函数作为connect(null,mapDispatchToProps)(Tools)方法的参数
+    第二种 
+    connect(null,action)(Tools)
+    本质上这个action就是直接引入的一个函数，返回值是一个函数，因此作为了函数入参,可以接收dispatch方法
+    等价于
+    connect(null,(dispatch)=>{
+        return{
+            const action = xxx;
+            dispatch(action)
+        }
+    })
+    *connect(null,mapDispatchToProps)方法的实质其实是接收了两个()=>{},接收的是函数本身而不是返回值,而第一种方法mapDispatchToProps是一个函数,作用到函数体内 才会把返回值 包含函数的对象 进行处理 从而把返回值(包含函数方法的对象）一一映射到组件的props上，而第二种方法参数2 action本身就是一堆函数对象，直接就能作用到组件的props上*
+
 
 

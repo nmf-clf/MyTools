@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import { Input, Button, List } from 'antd';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreator } from './store';
 //引入组件
@@ -7,10 +8,33 @@ import MyLayout from 'common/layout';
 import './index.less';
 
 class Tools extends Component{
+    constructor(props){
+        super(props);
+        console.log('this指向::',this,props)
+        this.state= {
+
+        }
+        this.obj1 = {
+            'A':'嘿嘿',
+            'B':'哈哈'
+        }
+        Object.keys(this.obj1).map((item,index)=>{
+            console.log("item??::",item,this.obj1[item])
+            return <p>1</p>
+        })
+        console.log('props::',this.props)
+    }
     componentDidMount(){
         this.props.getInitData()
     }
+    demo1(){
+
+    }
+    static demo2(){
+
+    }
     render(){
+        console.log('this指向2::',this)
         return(
             <div className='myComponents'>
                 <MyLayout>
@@ -43,6 +67,7 @@ class Tools extends Component{
     //     console.log('ee22222::',e,e.target.value)
     // }
 }
+console.log('NMF2::',actionCreator,actionCreator.getInitDataAction())
 //1.store里面的state映射到组件的props上
 const mapStateToProps = (state) =>{
     console.log('嘿嘿嘿state::',state,state.get('tools').value)
@@ -74,6 +99,8 @@ const mapDispatchToProps = (dispatch) =>{
         }
     } 
 }
+console.log('action???',mapDispatchToProps())
+
 //connect 是让 指定的组件 和 store 联系起来(相当于最下面的,只是把函数剥离了出来)
 //connect接收2个参数后返回的又是一个函数(方法)
 //也就是说 把子组件APP传入到了 connect方法的返回值里 UI组件就变成了容器组件 进而就可以处理数据、处理逻辑

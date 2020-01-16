@@ -18,7 +18,7 @@ export const deleteItemAction  = (payload) =>{
         payload
     }
 }
-export const getInitDataAction2 = (payload) =>{
+export const createGetInitDataAction = (payload) =>{
     return {
         type: types.GET_INIT_DATA,
         payload
@@ -31,7 +31,7 @@ export const getInitDataAction = () =>{
         .get('http://127.0.0.1:3005/api/getData')
         .then((res)=>{
             console.log('demo-res::',res)
-            const action = getInitDataAction2(res.data)
+            const action = createGetInitDataAction(res.data)
             dispatch(action)
             //store.dispatch(action)
         })

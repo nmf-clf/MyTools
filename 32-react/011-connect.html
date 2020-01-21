@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>react-redux的connect</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var allNum = 140005; //2020年人口总数
+    var date = 2020; //2020年
+    function getPersonNumber(){
+        if(allNum < 150000){
+            date = date + 1;
+            allNum = allNum * (1 + 0.00334);
+            getPersonNumber();
+        }
+    } 
+    getPersonNumber()
+    console.log('date::',date)
+
+
+    var obj = {
+        i:0
+    }
+    function f1(num){
+        obj.i += num
+        console.log('嘿嘿',obj.i)
+    }
+    f1(1)
+    f1(3)
+    function fn0(num){ //普通函数
+
+    }
+    let fn1 = function(num){ //匿名函数
+
+    }; 
+    let fn2 = (num) =>{ //箭头函数
+
+    }
+    function funA(arg1,arg2) {
+        var i = 0;
+        function funB(step) { //闭包函数
+            i = i + step;
+            console.log(i)
+        }
+        return funB;
+    }
+    var allShowA = funA(2, 3);                       //调用的是funA arg1=2，arg2=3
+    allShowA(1);
+    allShowA(3);                                    //调用的是funB setp=3,输出 4
+    fn0(0)
+    fn1(1)
+    fn2(2)
+    // const mapStateToProps = () =>{
+    //     return{
+    //         value:'123'
+    //     }
+    // }
+    // const mapDispatchToProps = () =>{
+
+    // }
+    // function connect(){
+
+    // }
+    // connect(mapStateToProps,mapDispatchToProps);
+</script>
+</html>

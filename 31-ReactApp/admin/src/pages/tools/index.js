@@ -3,6 +3,7 @@ import { Input, Button, List } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreator } from './store';
+import axios from 'axios';
 //引入组件
 import MyLayout from 'common/layout';
 import './index.less';
@@ -94,6 +95,23 @@ const mapDispatchToProps = (dispatch) =>{
             dispatch(action)
         },
         getInitData:()=>{
+            // const action = (dispatch2) =>{
+            //     axios
+            //     .get('http://127.0.0.1:3005/api/getData')
+            //     .then((res)=>{
+            //         console.log('demo-res::',res)
+            //         const action2 = {
+            //             type: 'tools/get_init_data',
+            //             payload: res.data
+            //         }
+            //         dispatch2(action2)
+            //         //store.dispatch(action)
+            //     })
+            //     .catch((err)=>{
+            //         console.log('error::',err)
+            //     })
+            // }
+            // dispatch(action)
             const action = actionCreator.getInitDataAction();
             dispatch(action)
         }

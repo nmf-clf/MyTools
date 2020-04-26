@@ -1,0 +1,821 @@
+import React, { Component } from 'react';
+import {
+    Text,
+    View,
+    TouchableOpacity,
+    FlatList,
+    ScrollView,
+    Image,
+    Alert,
+    RefreshControl,
+    WebView,
+    Button,
+    Dimensions
+} from 'react-native';
+//引入图表-依赖库组件
+import Echarts from 'native-echarts';
+//引入表格插件
+import {Row, Rows, Table} from 'react-native-table-component';
+//引入redux关联组件
+import { connect } from 'react-redux';
+//引入操作Action
+import * as SmartCenterActions from './redux/SmartCenterActions';
+//引入页面样式
+import styles from "./Telecommuting_css";
+//引入标题栏
+import NavigationBar from '../../../platform/component/navigationBar/NavigationBar';
+//引入日期组件
+import Calendar from '../../components/calendar/Calendar.js';
+//引用数据存储组件
+import Preference from 'react-native-preference';
+
+const { width, height } = Dimensions.get('window');
+
+
+
+//远程办公页面
+class Telecommuting extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            flag: true, //日期控件API，不清楚有何作用
+            topRightDate: '', //初始化右上角的日期
+            topLeftDate: '', //初始化顶部左边更新日期
+            isDatePickerShow: false, //是否显示日期
+            menuIndex: '0', //菜单切换选项-背景色
+            topData: {}, //初始化顶部数据
+            workPlaceData: [], //员工工作地点统计数据
+            timePlaceSheetsData: [], //公司本部上班人员统计
+            centerDivData: [], //各事业部中心办公状态比例
+            weekTotalsData: [], //近10天数据(远程办公/项目现场/休息人数)
+            isChangeMenuShow: true //默认显示切换菜单
+
+        }
+    }
+    componentDidMount() {
+      
+        this.getNewDate(0); //加载完毕执行
+
+    }
+    //生成需要的日期
+    getNewDate = (num) =>{
+        let newDate = new Date();
+        //var reg = new RegExp('/','g'); // /换成-
+        let myYear = newDate.getFullYear().toString(); //获取完整的年份
+        let myMonth = (newDate.getMonth() + 1).toString(); //获取月份
+        let myDay = newDate.getDate().toString();//获取日
+        let myHours = newDate.getHours().toString(); //获取当前小时数
+        let myMintes = newDate.getMinutes().toString(); //获取当前分钟数
+        //不可以用下面这个方法 因为debug环境下 是newDate中国标准时间。非debug环境下是CST时间
+        //let myDate = newDate.toLocaleDateString().replace(reg,'-'); //2020-2-23 
+        let myDate = myYear + '/' + myMonth + '/' + myDay;
+        let myDate2 = myYear + '年' + myMonth + '月' + myDay + '日' + ' ' + myHours + ':' +  myMintes;  
+        //alert(myDate)
+        if(num == 1){
+            this.setState({
+                topLeftDate: myDate2
+            },()=>{
+                this.getData(); //加载完毕获取-远成办公数据
+            })
+        }else{
+            this.setState({
+                topRightDate: myDate,
+                topLeftDate: myDate2
+            },()=>{
+                this.getData(); //加载完毕获取-远成办公数据
+            })
+        }
+        //this.getData();
+    }
+    //获取远程办公数据源
+    getData = () =>{
+        let params = {
+            time: this.state.topRightDate
+        }
+        this.props.getTelecommutingData(params,(data)=>{
+            //console.info('1111',data)
+            this.setState({
+                topData: data.top, //顶部数据
+                workPlaceData: data.wenduChartQ14, //工作地点数据-饼状图
+                timePlaceSheetsData: data.timePlaceSheets, //公司本部上班人员数据-表格
+                centerDivData: data.centerDiv, //各事业部中心办公状态比例-柱状图
+                weekTotalsData: data.weekTotals //近10天数据统计-折线图(远成办公/项目现场/休息人数)
+            },()=>{
+                //console.info('员工工作地点统计::',this.state.workPlaceData)
+            })
+        }); //获取远成办公数据
+    }
+    /**
+     * 界面卸载
+     */
+    componentWillUnmount() {
+      
+    }
+
+    //返回键设置
+    leftClick() {
+        NAVIGATION.goBack(null)
+    }
+   
+    //刷新界面页面
+    render() {
+        const { topData } = this.state;
+        //console.info('222',topData)
+        return (
+            <View style={styles.container}>
+                <NavigationBar leftClick={() => this.leftClick()}>远程办公</NavigationBar>
+                <ScrollView>
+
+                    {/* 创建顶部实时数据统计视图部分 */}
+                    {this.createHeaderView()}
+
+                    {/* 创建日期选择视图 */}
+                    {this.state.isDatePickerShow ? this.createSelectDateView() : null}
+
+                    {/* 创建切换菜单视图 */}
+                    {this.state.isChangeMenuShow ? this.createChangeMenuView() : null}
+
+                    {/* 创建员工办公状态比例图表部分 */}
+                    {this.state.menuIndex == '0' ? this.createOfficeStatusView() : null}
+                    
+                    {/* 创建员工工作地点图表部分 */}
+                    {this.state.menuIndex == '0' ? this.createOfficePlaceView() : null}
+
+                    {/* 创建公司本部上班人员统计视图 */}
+                    {this.state.menuIndex == '0' ? this.createCompanySelfWorkersView() : null}
+
+                    {/* 创建近10天远程办公人数视图 */}
+                    {this.state.menuIndex == '0' ? this.createRecentTelecommutingView() : null}
+
+                    {/* 创建近10天项目现场人数视图 */}
+                    {this.state.menuIndex == '0' ? this.createRecentProjectOnSiteView() : null}
+
+                    {/* 创建近10天休息人数视图 */}
+                    {this.state.menuIndex == '0' ? this.createRecentRestView() : null}
+
+                </ScrollView>
+            </View>
+        );
+    }
+
+    //创建顶部实时数据统计视图部分---------------------------->
+    createHeaderView = () =>{
+        const { topData,topRightDate,topLeftDate } = this.state;
+        return(
+            <View style={styles.header}>
+                <View style={styles.headerTop}>
+                    <View style={styles.headerTopLeft}>
+                        <Text style={styles.headerTopLeftText1}>远程办公实时数据统计</Text>
+                        <Text style={styles.headerTopLeftText2}>{'更新时间：' + topLeftDate}</Text>
+                    </View>
+                    <View style={styles.headerTopRight}
+                    >
+                        <TouchableOpacity 
+                            style={styles.headerTopRightTouch}
+                            key={'88'}
+                            onPress={() => {
+                                this.onOpenDateClick();
+                            }}
+                        >
+                            <View style={styles.headerTopRightImg}></View>
+                            <View style={styles.headerTopRightView}>
+                                <Text style={styles.headerTopRightText1}>{topRightDate}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.headerBottom}>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>远程签到人数</Text>
+                        <Text style={styles.item_Text2}>{topData.signTotals}</Text>
+                    </View>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>工作记录人数</Text>
+                        <Text style={styles.item_Text2}>{topData.emoNoTotals}</Text>
+                    </View>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>工作记录条数</Text>
+                        <Text style={styles.item_Text2}>{topData.workRecordTotals}</Text>
+                    </View>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>信息汇总人数</Text>
+                        <Text style={styles.item_Text2}>{topData.signTotals}</Text>
+                    </View>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>工作总时长</Text>
+                        <Text style={styles.item_Text2}>{topData.workhoursTotals}</Text>
+                    </View>
+                    <View style={styles.headerBottomItem}>
+                        <Text style={styles.item_Text1}>远程例会数</Text>
+                        <Text style={styles.item_Text2}>{topData.meetingTotals}</Text>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+    //打开日期组件
+    onOpenDateClick = () =>{
+        //alert('88888')
+        if(this.state.isDatePickerShow == false){
+            this.setState({
+                isDatePickerShow: true,
+                //isChangeMenuShow: false
+            })
+        }else{
+            this.setState({
+                isDatePickerShow: false,
+                //isChangeMenuShow: true
+            })
+        }
+    }
+    //创建日期选择视图--------------------------------------->
+    createSelectDateView = () =>{
+        return(
+            <View style={styles.selectDateView}>
+                <Calendar
+                    minDate={'2012-05-10'} //可展示日期期间-最小值
+                    maxDate={'2022-12-30'} //可展示日期区间-最大值
+                    onDayPress={(day) => { //点击具体日期的回调,返回对象具体的时间对象
+                        const demoDate = {
+                            "years":2020,
+                            "month":2,
+                            "day":28,
+                            "timestamp": 158284000000, //时标，不清楚有何作用
+                            "dateString": "2020-02-28"
+                        }
+                        this.onDayPress(day);
+                    }}
+                    monthFormat={'yyyy年MM月'} //日历标题中的月份格式
+                    onMonthChange={(month) => { //选择月份的回调,返回具体的事件对象
+                        this.getWeeklyData(month)
+                    }}
+                    hideArrows={false} //隐藏月份导航箭头。 默认=假
+                    flag= {this.state.flag} 
+                    renderArrow={(direction) => {}}//用自定义箭头替换默认箭头（方向可以是“左”或“右”）
+                    hideExtraDays={false} //不要在月份页面中显示其他月份的日期。 默认=假
+                    //如果hideArrows = false和hideExtraDays = false，则在灰色显示时不切换月份
+                    //从日历页面中可见的另一个月开始的一天。 默认=假
+                    disableMonthChange={false}
+                    //如果firstDay = 1周从星期一开始。 请注意，dayNames和dayNamesShort仍应从星期日开始。
+                    firstDay={1}
+                    hideDayNames={false} //隐藏日期名称。 默认=假
+                    //markedDates={markedDates} //标注日期??
+                    theme={{ //主题背景
+                        backgroundColor: '#ffffff',
+                        calendarBackground: 'white',
+                        textSectionTitleColor: '#b6c1cd',
+                        selectedDayBackgroundColor: '#00adf5',
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: '#00adf5',
+                        dayTextColor: '#2d4150',
+                        textDisabledColor: '#d9e1e8',
+                        dotColor: 'red',
+                        selectedDotColor: '#ffffff',
+                        arrowColor: 'orange',
+                        monthTextColor: 'white',
+                        textDayFontSize: 12,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 12
+                    }}
+                />
+            </View>
+        )
+    }
+    //日期点击
+    onDayPress = (day) =>{
+        //alert(JSON.stringify(day))
+        this.setState({
+            isDatePickerShow: false,
+            topRightDate: day.dateString, //修改右上角日期 
+            //isChangeMenuShow: true
+        },()=>{
+            this.getNewDate(1);
+            //this.getData(day.dateString);
+        })
+    }
+    //月份点击
+    getWeeklyData = (month) =>{
+        //alert(JSON.stringify(month))
+    }
+   
+    //创建切换菜单视图--------------------------------------->
+    createChangeMenuView = () =>{
+        const buttonList = [
+            {
+                key: '1',
+                title: '员工状态'
+            },
+            {
+                key: '2',
+                title: '工作记录'
+            },{
+                key: '3',
+                title: '项目例会'
+            }
+        ]
+        return(
+            <View style={styles.changeMenuView}>
+                <View style={styles.buttonView}>
+                    {
+                       buttonList && buttonList.map((item,index)=>{
+                           return(
+                                <TouchableOpacity 
+                                    style={[styles.buttonViewItem,{
+                                        backgroundColor: index == this.state.menuIndex ? '#6495ED' : '#fff',
+                                        borderTopWidth: index == this.state.menuIndex ? null : 1,
+                                        borderRightWidth: index == this.state.menuIndex ? null : 1,
+                                        borderLeftWidth: index == this.state.menuIndex ? null : 1,
+                                        borderBottomWidth: index == this.state.menuIndex ? null : 1,
+                                        borderStyle: index == this.state.menuIndex ? null : "solid",
+                                        borderColor: index == this.state.menuIndex ? null : "#6495ED",
+                                    }]}
+                                    key={index}
+                                    onPress={() => {
+                                        this.onChangeMenuClick(index);
+                                    }}
+                                >
+                                    <Text style={[styles.buttonItemText,{
+                                        color: index == this.state.menuIndex ? '#fff' : '#6495ED',
+                                    }]}>{item.title}</Text>
+                                </TouchableOpacity>
+                                
+                           )
+                       }) 
+                    }
+                </View>
+            </View>
+        )
+    }
+    //改变菜单切换视图事件
+    onChangeMenuClick = (index) =>{
+        alert(index)
+        this.setState({
+            menuIndex: index
+        })
+    }
+
+    //创建员工办公状态比例图表部分----------------------------->
+    percentNum = (num,num2) =>{
+        return (Math.floor(num / num2 * 10000) / 100.00);  //小数点后两位百分比
+    }
+    createOfficeStatusView = () =>{
+        const { centerDivData } = this.state;
+        //console.info('办公数据====',this.state.centerDivData)
+        //定义需要的数组
+        let singleYdata = []; //Y轴数据数组
+        let remotedata = []; //远程上班数组
+        let realdata = []; //项目现场数组
+        let noSubmitdata = []; //未提交数组
+        let restdata = []; //休息数组
+
+        let personTotals = 0; //总人数
+        let remotePersonTotals = 0; //远成办公人数
+        let realPersonTotals = 0; //项目现场人数
+        let noSubmitPersonTotals = 0; //未提交人数
+        let restPersonTotals = 0; //休息人数
+
+
+        centerDivData && centerDivData.map((item,index)=>{
+            singleYdata.push(item.centerName); //循环添加办公地点
+            let remotePerson = item.remotePersonTotals;
+            let realPerson = item.realPersonTotals;
+            let noSubmitPerson = item.noSubmitPersonTotals;
+            let restPerson = item.restPersonTotals;
+
+            let total = remotePerson + realPerson + noSubmitPerson + restPerson;
+            remotedata.push(this.percentNum(remotePerson,total))
+            realdata.push(this.percentNum(realPerson,total));
+            noSubmitdata.push(this.percentNum(noSubmitPerson,total));
+            restdata.push(this.percentNum(restPerson,total));
+
+        })
+
+        // console.info('办公地点最终数组',singleYdata)
+        // console.info('四种状态数组1',remotedata)
+        // console.info('四种状态数组2',realdata)
+        // console.info('四种状态数组3',noSubmitdata)
+        // console.info('四种状态数组4',restdata)
+
+        const option1 = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: { //提示性标签
+                data: ['远成办公', '项目现场', '休息', '未提交' ]
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                max:"100"
+            },
+            yAxis: {
+                type: 'category',
+                data: singleYdata,
+                // ['复深蓝无锡', '上海阳弦网络', '北京分公司', '战略发展中心', '财务运营中心', '互联网测试', '行政事务中心',
+                // '人力资源中心','市场营销中心','智能测试平台','广州子公司','金融软件事业','智能测试事业'
+                // ],
+            },
+            series: [
+                {
+                    name: '远成办公',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                        position: 'insideRight'
+                    },
+                    data: remotedata //[1,3,1, 2,2,4,4,7, 12,23,24,534,567]
+                },
+                {
+                    name: '项目现场',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                        position: 'insideRight'
+                    },
+                    data: realdata //[0,3,3, 1,7,0,3,2, 5,12,12,67,89]
+                },
+                {
+                    name: '休息',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                        position: 'insideRight'
+                    },
+                    data: noSubmitdata //[0,0,2, 5,1,9,6,9, 6,19,14,71,47]
+                },
+                {
+                    name: '未提交',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                        position: 'insideRight'
+                    },
+                    data: restdata //[0,0,2, 0,2,2,0,2, 5,2,4,34,43]
+                },
+            ]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText}>各事业部/中心办公状态比例</Text>
+                </View>
+                <Echarts option={option1} height={400} />
+            </View>
+        )
+    }
+
+    //创建员工工作地点图表部分--------------------------------->
+    createOfficePlaceView = () =>{ //已完成
+        const { workPlaceData } = this.state;
+        //console.info('内====::',workPlaceData)
+        const WORKPLACETITLE = {
+            '1': "本部13楼01/02",
+            '2': "本部13楼03/04",
+            '3': "本部2楼",
+            '4': "本部C1",
+            '5': "浦东本部",
+            '6': "广州本部",
+            '7': "北京本部",
+            '8': "客户处",
+            '9': "家"
+        }
+        let newWorkPlaceDataList = [];
+        workPlaceData && workPlaceData.map((item,index)=>{
+            let workPlaceObj = {
+                value: item.singleCount,
+                name: WORKPLACETITLE[item.title] || '其他'
+            }
+            newWorkPlaceDataList.push(workPlaceObj)
+        })
+        function randomsort(a, b) {
+            return Math.random()>.5 ? -1 : 1;
+            //用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
+        }
+        const newList = newWorkPlaceDataList.sort(randomsort)
+        //console.info('==============',newList)
+
+        const option2 = {
+            tooltip: {
+                trigger: 'item', //触发条件-item
+                formatter: '{a} <br/>{b}: {c} ({d}%)' //格式化-样式
+            },
+            legend: {
+                //orient: 'vertical', //方向-垂直
+                //left: 10,
+                //data: ['本部2楼', '家', '广州本部', '客户处', '本部13楼03']
+            },
+            series: [ //系列
+                {
+                    name: '工作地点', //相当于{a}
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: true,
+                    label: { //标签
+                        normal: { //正常
+                            show: true, //显示:假
+                            position: 'top' //位置:中心
+                        },
+                        emphasis: { //重点
+                            show: true, //显示:真
+                            textStyle: { //字体样式
+                                fontSize: '30', //30px
+                                fontWeight: 'bold' //粗体
+                            }
+                        }
+                    },
+                    labelLine: { //标签线
+                        normal: {
+                            show: true //不显示
+                        }
+                    },
+                    data: newList
+                    // [
+                    //     {value: 500, name: '家'}, //name相当于{b} value相当于{c}
+                    // ]
+                }
+            ]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText}>员工工作地点统计</Text>
+                </View>
+                <Echarts option={option2} height={400} />
+            </View>
+        )
+    }
+
+    //创建公司本部上班人员统计视图---------------------------------->
+    createCompanySelfWorkersView = () =>{
+        const { timePlaceSheetsData } = this.state;
+        const WORKPLACETITLE = {
+            '1': "本部13楼01/02",
+            '2': "本部13楼03/04",
+            '3': "本部2楼",
+            '4': "本部C1",
+            '5': "浦东本部",
+            '6': "广州本部",
+            '7': "北京本部",
+            '8': "客户处",
+            '9': "家"
+        }
+        let newData = []
+
+        
+        
+        timePlaceSheetsData && timePlaceSheetsData.map((item,index)=>{
+           if(item && item.place){
+                newData.push(item)
+           }
+        })
+
+        console.info('表格数据',newData)
+        const options = {
+            tableHead: ['区域', '8:00-16:30', '11:00-19:30', '其他', '合计'], //第一列表格行
+            tableData: [ //左侧及数据源
+                ['本部1301/02',
+                    '76人',
+                    '25人',
+                    '3人',
+                    '104人',
+                ],
+                [
+                    '本部1303/04',
+                    '33人',
+                    '18人',
+                    '5人',
+                    '56人',
+                ],
+                [
+                    '本部2楼',
+                    '33人',
+                    '44人',
+                    '3人',
+                    '80人',
+                ],
+                [
+                    '本部C1',
+                    '14人',
+                    '8人',
+                    '0人',
+                    '22人',
+                ],
+                [
+                    '合计',
+                    '156人',
+                    '95人',
+                    '11人',
+                    '262人',
+                ]
+            ]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText2}>公司本部上班人员统计</Text>
+                </View>
+                <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                    <Row data={options.tableHead} style={styles.tableHead} textStyle={styles.tableHeadText}/>
+                    <Rows data={options.tableData} textStyle={styles.tableHeadText}/>
+                </Table>
+
+            </View>
+        )
+    }
+
+    //创建近10天远程办公人数视图---------------------------------->
+    createRecentTelecommutingView = () =>{
+        const { weekTotalsData } = this.state;
+        //console.info('近10天数据::',weekTotalsData)
+        let dateList = [];
+        let numList = [];
+        var recentReg = new RegExp('-','g'); // -换成/
+        
+        weekTotalsData && weekTotalsData.map((item,index)=>{
+            dateList.push(item.created.replace(recentReg,'/').slice(5));
+            numList.push(item.remotePersonTotals)
+        })
+        //console.info('处理后的数组1::',dateList)
+        //console.info('处理后的数组2::',numList)
+        const option4 = {
+            title: { //标题-不显示
+                text: '',
+            },
+            tooltip: {},
+            legend: { //注释文字-不显示
+                data: ['']
+            },
+            xAxis: {
+                // axisLabel: { //间隔
+                //     interval: 0,
+                // },
+                // splitLine: { //间隔
+                //     interval: 0
+                // },
+                data: dateList //["2/5", "2/6", "2/7", "2/8", "2/9", "2/10","2/11"]
+            },
+            yAxis: {
+                type: 'value',
+                show:false
+            }, //Y轴
+            series: [{
+                name: '远程办公人数',
+                type: 'line',
+                color:['orange'],
+                label: {
+                    normal: {
+                        lineStyle: {
+                            width: 3 // 0.1的线条是非常细的了
+                        },
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data: numList //[456, 679, 966, 1045, 1245, 902,1023]
+            }]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText}>近10天远程办公人数</Text>
+                </View>
+                <Echarts option={option4} height={300} />
+            </View>
+        )
+    }
+
+    //创建近10天项目现场人数视图---------------------------------->
+    createRecentProjectOnSiteView = () =>{
+        const { weekTotalsData } = this.state;
+        //console.info('10-----',weekTotalsData)
+        let dateList2 = [];
+        let numList2 = [];
+        var recentReg = new RegExp('-','g'); // -换成/
+        
+        weekTotalsData && weekTotalsData.map((item,index)=>{
+            dateList2.push(item.created.replace(recentReg,'/').slice(5));
+            numList2.push(item.realPersonTotals)
+        })
+
+        const option5 = {
+            title: { //标题-不显示
+                text: '',
+            },
+            tooltip: {},
+            legend: { //注释文字-不显示
+                data: ['']
+            },
+            xAxis: {
+                // axisLabel: { //间隔
+                //     interval: 0,
+                // },
+                // splitLine: { //间隔
+                //     interval: 0
+                // },
+                data: dateList2 //["2/5", "2/6", "2/7", "2/8", "2/9", "2/10","2/11"]
+            },
+            yAxis: {
+                type: 'value',
+                show:false
+            }, //Y轴
+            series: [{
+                name: '项目现场人数',
+                type: 'line',
+                color:['#6495ED'],
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data: numList2 //[23, 45, 52, 45, 47, 192,230]
+            }]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText}>近10天项目现场人数</Text>
+                </View>
+                <Echarts option={option5} height={300} />
+            </View>
+        )
+    }
+
+    //创建近10天休息人数视图---------------------------------->
+    createRecentRestView = () =>{
+        const { weekTotalsData } = this.state;
+        let dateList3 = [];
+        let numList3 = [];
+        var recentReg = new RegExp('-','g'); // -换成/
+        
+        weekTotalsData && weekTotalsData.map((item,index)=>{
+            dateList3.push(item.created.replace(recentReg,'/').slice(5));
+            numList3.push(item.restPersonTotals)
+        })
+
+        const option6 = {
+            title: { //标题-不显示
+                text: '',
+            },
+            tooltip: {},
+            legend: { //注释文字-不显示
+                data: ['']
+            },
+            xAxis: {
+                // axisLabel: { //间隔
+                //     interval: 0,
+                // },
+                // splitLine: { //间隔
+                //     interval: 0
+                // },
+                data: dateList3 //["2/5", "2/6", "2/7", "2/8", "2/9", "2/10","2/11"]
+            },
+            yAxis: {}, //Y轴
+            series: [{
+                name: '休息人数',
+                type: 'line',
+                color:['green'],
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data: numList3 //[245, 220, 207, 187, 176, 157,123]
+            }]
+        };
+        return(
+            <View style={styles.officeStatusView}>
+                <View style={styles.officeStatusTextView}>
+                    <Text style={styles.officeStatusText}>近10天休息人数</Text>
+                </View>
+                <Echarts option={option6} height={300} color={'green'}/>
+            </View>
+        )
+    }
+}
+
+//export default Telecommuting;
+//把Reducer和Action与页面组件关联起来
+export default connect((state) => {
+    const { SmartCenterReducer } = state;
+    return {
+        SmartCenterReducer
+    }
+}, SmartCenterActions)(Telecommuting)

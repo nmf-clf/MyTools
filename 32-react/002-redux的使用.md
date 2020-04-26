@@ -150,8 +150,8 @@ export const getInitDataAction = () =>{
 import { createStore,applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 const middleware = [thunk];
-if(process.env.NODE_ENV != 'production'){
-    const logger = createLogger({
+if(process.env. != 'production'){
+    const logger =NODE_ENV createLogger({
         // ...options
     });
     middleware.push(logger)

@@ -10,19 +10,6 @@
     
 </body>
 <script>
-    var allNum = 140005; //2020年人口总数
-    var date = 2020; //2020年
-    function getPersonNumber(){
-        if(allNum < 150000){
-            date = date + 1;
-            allNum = allNum * (1 + 0.00334);
-            getPersonNumber();
-        }
-    } 
-    getPersonNumber()
-    console.log('date::',date)
-
-
     var obj = {
         i:0
     }

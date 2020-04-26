@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var myDate = new Date();
+    console.log('获取当前年份',myDate.getYear());        //获取当前年份(2位)
+    console.log('获取完整的年份',myDate.getFullYear());    //获取完整的年份(4位,1970-????)
+    console.log('获取当前月份',myDate.getMonth());       //获取当前月份(0-11,0代表1月)
+    console.log('获取当前日',myDate.getDate());        //获取当前日(1-31)
+    console.log('获取当前星期X',myDate.getDay());         //获取当前星期X(0-6,0代表星期天)
+    console.log('获取当前时间',myDate.getTime());        //获取当前时间(从1970.1.1开始的毫秒数)
+    console.log('获取当前小时数',myDate.getHours());       //获取当前小时数(0-23)
+    console.log('获取当前分钟数',myDate.getMinutes().toString().length);     //获取当前分钟数(0-59)
+    console.log('获取当前秒数',myDate.getSeconds());     //获取当前秒数(0-59)
+    console.log('毫秒',myDate.getMilliseconds());    //获取当前毫秒数(0-999)
+    console.log('当前日期',myDate.toLocaleDateString()); //获取当前日期
+    var mytime=myDate.toLocaleTimeString();    
+    console.log('当前时间',mytime) //获取当前时间
+    console.log('获取日期与时间',myDate.toLocaleString( ))        //获取日期与时间
+
+    let myTopRightDate = myDate.toLocaleDateString();
+    var reg = new RegExp('/','g')
+    console.log(1111111,myTopRightDate.replace(reg,'-'))
+
+    
+</script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>let变量定义</title>
+</head>
+<body>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+</body>
+<script>
+    //总结::
+    //1.var 定义的变量可以重新定义，但是let定义的变量不能再定义
+    //1.var 有变量提升，let没有
+    //2.var 的变量作用域为函数作用域，而let声明的变量 作用域为块级作用域
+    
+    var oBtn = document.getElementsByTagName('button');
+    console.log(oBtn)
+    /* for(var i=0; i<oBtn.length; i++){
+        oBtn[i].onclick = function(){
+            console.log('原始::',i)
+        }
+    } */
+
+    /* for(var i=0; i<oBtn.length; i++){ //增加属性
+        oBtn[i].index = i;  //不清楚为何在oBtn[i]上增加个属性index
+        oBtn[i].onclick = function(){
+            console.log('第一种::',this.index)
+        }
+    } */
+
+    /* for(var i=0; i<oBtn.length; i++){ //使用闭包 封闭空间
+        (function(i){
+            oBtn[i].onclick = function(){
+                console.log('第二种::',i)
+            }
+        })(i)
+    } */
+
+    for(let i=0; i<oBtn.length; i++){ //ES6 let定义变量
+        oBtn[i].onclick = function(){
+            console.log('第三种::',i)
+        }
+    }
+</script>
+</html>

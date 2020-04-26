@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let nubList = [
+        {
+            code: '1',
+            value: '111',
+        },
+        {
+            code: '2',
+            value: '222',
+        },{
+            code: '3',
+            value: '333',
+        }
+    ]
+    // if(nubList.find(function(x) {
+    // return x.value == '222';
+    // }) != undefined) {
+    //   console.log('有值')
+    // }
+    let newCode = ''
+    function changeInput(text){
+        console.log('text的值::',text)
+      if( nubList.find( 
+          function(item){ 
+                newCode = item.code
+              return item.value == text 
+          } )  != undefined ){
+          console.log('有值',newCode)
+      }
+    }
+
+    changeInput('333')
+</script>
+</html>

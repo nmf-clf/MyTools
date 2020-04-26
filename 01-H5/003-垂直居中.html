@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .box{
+        	height:100px;
+        	width: 100px;
+        	border: 1px solid red;
+        	position:relative;
+        }
+        .box1{
+		    display: table-cell;/*此元素会作为一个表格单元格显示（类似 <td> 和 <th>）*/
+		    vertical-align: middle;/*定义行内元素的基线相对于该元素所在行的基线的垂直对齐。允许指定负长度值和百分比值。
+		    			这会使元素降低而不是升高。在表单元格中，这个属性会设置单元格框中的单元格内容的对齐方式*/
+		    text-align: center;        
+		}
+		.box2{
+		    display: flex;/*弹性盒子*/
+		  	justify-content:center;/*元素在主轴（页面）上居中排列*/
+		    align-items:Center;/*弹性盒子元素在该行的侧轴（纵轴）上居中放置。（居中对齐）*/
+		}
+		.box3{
+		  width: 50%; 
+		  height: 50%; 
+		  overflow: auto; 
+		  margin: auto; 
+		  position: absolute; 
+		  top: 0; left: 0; bottom: 0; right: 0;
+		}
+		.box4{
+			position: absolute;
+            top:50%;
+            left:50%;
+            width:100%;
+            transform:translate(-50%,-50%);
+            text-align: center;
+		}
+		.box5{
+			 display: -webkit-box;/*弹性框模型*/
+		    -webkit-box-pack:center;/*沿 box-orient 轴的父元素中子元素的排列方式*/
+		    -webkit-box-align:center;/*框的子代在框中的排列方式。如果方向是水平的，该属性就会决定垂直排列，反之亦然*/
+		    -webkit-box-orient: vertical;/*子元素是如何排列*/
+		}
+    </style>
+</head>
+<body>
+
+    <div class="box box5">
+        <div class="" style="border:1px solid red">垂直居中</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+	function ranNum(min,max){
+		return function(){
+			// 利用闭包，等我们需要产生随机数在调用
+			return parseInt(Math.random()*(max-min+1)+min)
+		}
+	}
+	// 即将产生在48-122区间的随机的一个unicode编码，未调用
+	var myUni = ranNum(48,122)
+	// 用来装四个符合[0-9a-zA-Z]的unicode编码
+	var arr = []
+	// 产生四个unicode放入arr数组中
+	// 当arr没有装满四个时
+	while(arr.length!==4){
+		// 产生一个随机码
+		var num = myUni()
+		// 符合需求在48-57,65-90,97-122的随机数放入arr数组中，知道arr装满四个
+        if (num >= 48 && num <= 57 || num >= 65 && num <= 90 || num >= 97 && num <= 122){
+              arr.push(num)
+        }
+	}
+	// 此时拿到了随机的四个unicode
+	// 利用String.fromCharCode
+	// 可以使用arr.join(',')切割字符串，也可以使用apply
+	var authCode = String.fromCharCode.apply(null,arr)
+	console.log(authCode)
+</script>
+
+</html>

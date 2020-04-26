@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>const定义常量</title>
+</head>
+<body>
+</body>
+<script>
+    //总结::
+    //1.const 定义常量的时候 必须赋初值
+    //2.const 定义常量不可以再次被赋值
+    //3.const 定义的常量 
+        //如果是简单的数据类型，值就被保存在常量所指向的那个栈内存地址，因此值不能再次被改变
+        //如果是复杂的数据类型，常量指向被保存的内存地址，const保证的是这个地址不变，但是地址指向的数据是可变的
+        //还需要学习 数据结构 栈内存 堆内存 等等
+    //4. const和let一样 都不存在变量声明，也都是块级作用域
+    const PI = 3.1415926;
+    //PI = PI + 1  //写法是错误的
+
+    const Person = {
+        name:'Tom',
+        age:18,
+        color:'red'
+    }
+    Person.name = 'Leo';
+    Person.hobbit = 'basketball'
+    console.log('Person::',Person)
+</script>
+</html>

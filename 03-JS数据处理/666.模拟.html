@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <style>
+        .box2 div{
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <button>111</button>
+        <button>222</button>
+        <button>333</button>
+    </div> 
+    <div class="box2">
+        <div style='display: block;'>1-1</div>
+        <div>1-2</div>
+        <div>1-3</div>
+    </div>
+</body>
+<script>
+    var oBtn = $('.box1 > button');
+    var oDiv = $('.box2 > div');
+    console.log(oBtn)
+    for(var i=0; i<oBtn.length; i++){
+        oBtn[i].onclick = function(){
+            oBtn[i].index = i;
+            for(var j=0; j<oDiv.length; j++){
+                oBtn[j].style.backgroundColor = '';
+                oDiv[j].style.display = 'none';
+            }
+            this.style.backgroundColor = 'yellow'
+            oDiv[this.index].style.display = 'block';
+
+        }
+    }
+</script>
+</html>

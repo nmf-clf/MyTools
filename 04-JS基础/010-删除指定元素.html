@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //符合条件的数组
+    let distanceArr = [
+        {
+            addressSn: '1'
+        },
+        {   
+            addressSn: '2'
+        },
+        {
+            addressSn: 'Y80000000183'
+        },
+        {
+            addressSn: 'Y80000000185'
+        }
+    ];
+  
+    let finArr = []; //最终数组
+    let newArr = [];
+    let newArr2 = [];
+
+    let distanceArrLength = distanceArr && distanceArr.length;
+
+    distanceArr && distanceArr.map((item,index,arr)=>{
+        console.log(item,index,arr)
+        if( item.addressSn == 'Y80000000183' || item.addressSn == 'Y80000000185'){
+
+            newArr2.push(item)
+        }else{
+            newArr.push(item)
+        }
+    })
+    console.log('555')
+    if(newArr.length < 1){
+        console.log('小于1')
+        finArr = [...newArr2]
+    }else{
+        console.log('大于1')
+        finArr = [...newArr]
+    }
+
+    if(finArr.length < 1){
+        console.log('1111111111111::',finArr)
+    }
+    console.log('newArr::',newArr)
+    console.log('newArr2::',newArr2)
+    console.log('finaArr::',finArr)
+
+
+
+
+
+
+    
+        // if( item.addressSn != 'Y80000000183' && item.addressSn != 'Y80000000185' 
+        // //&& distanceArrLength > 2 
+        // ){ //包含自己的项目和本部考勤地点 lenght>2
+        //     console.log('111')
+        //     newArr.push(item)
+        // }else if( (item.addressSn == 'Y80000000183' || item.addressSn == 'Y80000000185') 
+        // && distanceArrLength <= 2 
+        // ){ //不包含自己的项目 但是有本部考勤地点 lenght最大值为2 可能为1
+        //     console.log('222')
+        //     newArr.push(item)
+        // }
+</script>
+</html>

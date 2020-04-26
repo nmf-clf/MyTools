@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // var reg = new RegExp("^(\\d|[1-9]\\d|100)$");
+    // var testNum = 101;
+    // if(!reg.test(testNum)) {
+    //     alert("请输入0-100的整数！");
+    // }
+    let str = '012';
+    let text1 = str.substr(0,1);
+    console.log(str,text1)
+
+    let myDate = new Date();
+        let tYear = myDate.getFullYear();
+        let tMonth = myDate.getMonth();
+        console.info('tMonth++',tMonth)
+        var m = tMonth + 0;
+        var m2 = tMonth + 1;
+        if (m.toString().length == 1) {
+            m = "0" + m;
+        }
+        if (m2.toString().length == 1) {
+            m2 = "0" + m2;
+        }
+        let startTime = tYear+'-'+ m;
+        let endTime = tYear+'-'+ m2;
+        console.info('tYear+tMonth::',tYear+'-'+m)
+
+        function getDate(time) {
+    console.info('time++++++++++++',time)
+    const date = new Date();
+    const [year, month] = time.split('-');
+    date.setYear(year);
+    date.setMonth(month);
+    return date;
+}
+</script>
+</html>

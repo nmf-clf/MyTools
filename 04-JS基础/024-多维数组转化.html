@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let arr = [
+        {
+            eeNo: '111111',
+            eeName: '牛梦菲',
+            ex: '1',
+            sd: '2'
+        },{
+            eeNo: '22222',
+            eeName: '牛梦菲2',
+            ex: '1',
+            sd: '2'
+        },
+        {
+            eeNo: '77777',
+            eeName: '牛梦菲7',
+            ex: '1',
+            sd: '2'
+        },
+        {
+            eeNo: '33333',
+            eeName: '牛梦菲3',
+            ex: '1',
+            sd: '2'
+        },
+        {
+            eeNo: '444444',
+            eeName: '牛梦菲4',
+            ex: '1',
+            sd: '2'
+        },
+        {
+            eeNo: '555555',
+            eeName: '牛梦菲5',
+            ex: '1',
+            sd: '2'
+        },
+        {
+            eeNo: '666666',
+            eeName: '牛梦菲6',
+            ex: '1',
+            sd: '2'
+        }
+    ]
+    arrTrans = (num, arr) => { // 一维数组转换为二维数组
+        const iconsArr = []; // 声明数组
+        arr && arr.forEach((item, index) => {
+            console.log(item,index)
+          const page = Math.floor(index / num); // 计算该元素为第几个数组内
+          console.log(index,page)
+          if (!iconsArr[page]) { // 判断是否存在
+            iconsArr[page] = [];
+          }
+          iconsArr[page].push(item.eeNo,item.eeName);
+        });
+        return iconsArr;
+    }
+
+    console.log( arrTrans(1,arr) )
+</script>
+</html>

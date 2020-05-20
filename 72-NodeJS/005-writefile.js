@@ -1,6 +1,14 @@
+/*
+ * @Author: niumengfei
+ * @Date: 2020-05-09 22:54:13
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-14 18:04:04
+ * @Description: file content
+ * @FilePath: \MyTools\72-NodeJS\005-writefile.js
+ */
 let fs = require('fs');
 
-//新增文件
+//新增文件 也叫作覆盖写入
 fs.writeFile('dirtree.js','',(err)=>{
     if(err){
         console.log('新增文件失败',err)
@@ -9,7 +17,7 @@ fs.writeFile('dirtree.js','',(err)=>{
     }
 })
 
-//修改文件 如果文件不存在，则会先创建一个文件
+//修改文件 如果文件不存在，则会先创建一个文件 累加写入
 // fs.appendFile('name.txt','嘿嘿2',(err)=>{
 //     if(err){
 //         console.log('修改文件内容失败',err)

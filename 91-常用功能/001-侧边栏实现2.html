@@ -1,0 +1,103 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-05-21 09:44:39
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-21 13:44:23
+ * @Description: file content
+ * @FilePath: \MyTools\91-常用功能\001-侧边栏实现2.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>002-侧边栏实现2</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <style>
+        body {
+            margin:0;
+            background:rgb(120,194,196);
+        }
+        ul {
+            display:inline-block;
+            list-style:none;
+            width:100%;
+        }
+        li {
+            padding:10px;
+        }
+        ul a {
+            text-decoration:none;
+            color:rgb(255,255,255);
+            font-size:16px;
+            font-weight:700;
+            display:inline-block;
+            width:100%;
+        }
+        ul a:hover {
+            background:rgb(189,192,186);
+        }
+        .btn-on,.btn-out {
+            border:none;
+            background:rgb(110,117,164);
+            width:200px;
+            height:100px;
+            color:rgb(255,255,255);
+            font-size:16px;
+            font-weight:700;
+            position:absolute;
+            right:10px;
+            top:10px;
+        }
+        .btn-out {
+            display:none;
+            background:rgb(0,137,167);
+        }
+        .click-bar {
+            background:rgb(110,117,164);
+            width:400px;
+            position:fixed;
+            top:130px;
+            right:-400px;
+        }
+
+    </style>
+</head>
+<body>
+    <button class="btn-on">一键点击侧拉菜单(相对定位)</button>
+    <button class="btn-out">一键关闭侧拉菜单</button>
+    
+    <div class="click-bar">
+        <ul>
+            <li><a href="#">菜单项1</a></li>
+            <li><a href="#">菜单项2</a></li>
+            <li><a href="#">菜单项3</a></li>
+            <li><a href="#">菜单项4</a></li>
+        </ul>
+    </div>
+</body>
+<script>
+    var clickbar = $('.click-bar'),
+        buttonOn = $('.btn-on'),
+        buttonOut = $('.btn-out');
+
+    function showClickbar() {
+        clickbar.animate({
+            'right': 0,
+        });
+        buttonOn.fadeOut();
+        buttonOut.fadeIn();
+    }
+
+    function hideClickbar() {
+        clickbar.animate({
+            'right': -clickbar.width()
+        });
+        buttonOut.fadeOut();
+        buttonOn.fadeIn();
+    }
+
+    buttonOn.on('click', showClickbar)
+    buttonOut.on('click', hideClickbar)
+</script>
+</html>

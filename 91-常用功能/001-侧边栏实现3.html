@@ -1,0 +1,81 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-05-21 13:42:31
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-21 14:53:36
+ * @Description: file content
+ * @FilePath: \MyTools\91-常用功能\001-侧边栏实现3.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>001-侧边栏实现3</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 400px;
+            height: 600px;
+            position: absolute;
+            overflow: hidden;
+        }
+        .leftBox{
+            width: 400px;
+            height: 600px;
+            background-color: #383838;
+            opacity: 0.5;
+            
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* display: none; */
+        }
+        .rightBox{
+            width: 300px;
+            height: 600px;
+            background-color: orange;
+            position: absolute;
+            right: -300px;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn">显示侧边栏(绝对定位)</button>
+    
+    <div class="container">
+        <div class="leftBox"></div>
+        <div class="rightBox"></div>
+    </div>
+
+</body>
+<script>
+    var oBtn = $('.btn'),
+        oLeftBox = $('.leftBox'),
+        oRightBox = $('.rightBox');
+        
+    function boxShow(){
+        oLeftBox.get(0).style.display = 'block';
+        oRightBox.animate({
+            'right': 0
+        })
+    }
+    function boxHide(){
+        oRightBox.animate({
+            'right': -oRightBox.width()
+        },()=>{
+            oLeftBox.get(0).style.display = 'none';
+        })
+        
+    }
+ 
+    oBtn.click('on',boxShow) //显示
+    oLeftBox.click('on',boxHide) //隐藏
+
+  
+</script>
+</html>

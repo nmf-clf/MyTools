@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/multiselect/serverfiltering">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
+    
+    
+
+</head>
+<body>
+    <input id="input" type="text" oninput="changeKeyWord(this,value)">
+    <div id="example" >
+        <div class="demo-section k-content">
+            <h4>Products</h4>
+            <select id="products"></select>
+        </div>
+        
+    </div>
+<script>
+        function changeKeyWord(obj, value){
+            console.log('输入框变化::',value)
+            keyWord = value;    
+            // console.log('===',$("#products").get(0))  
+            $("#products-list").get(0).remove()
+            this.getData();      
+        }
+    // $(document).ready(function() {
+        function onDataBound() {
+            console.log('onDataBound...')
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event: dataBound");
+            }
+        }
+        function onOpen() {
+            console.log('onOpen...')
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event: open");
+            }
+        }
+        function onClose() {
+            console.log('onClose...')
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event: close");
+            }
+        }
+        function onChange() {
+            console.log('onChange...')
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event: change");
+            }
+        }
+        function onSelect(e) {
+            console.log('onSelect...',e.dataItem)
+            if ("kendoConsole" in window) {
+                var dataItem = e.dataItem;
+                kendoConsole.log("event :: select (" + dataItem.text + " : " + dataItem.value + ")" );
+            }
+        };
+        function onDeselect(e) {
+            console.log('onDeselect...',e.dataItem)
+            if ("kendoConsole" in window) {
+                var dataItem = e.dataItem;
+                kendoConsole.log("event :: deselect (" + dataItem.text + " : " + dataItem.value + ")" );
+            }
+        };
+        function onFiltering(e) {
+            console.log('onFiltering...',e.dataItem)
+            if ("kendoConsole" in window) {
+                kendoConsole.log("event :: filtering");
+            }
+        }
+        var keyWord = '';
+
+        var data = [
+               
+            ];
+        for(var i=0;i<30;i++){
+            let obj = {
+                text: '嘿嘿'+ i,
+                value: '嘻嘻' + i
+            }
+            data.push(obj)
+        }
+        function getData(){
+            $("#products").kendoMultiSelect({
+            placeholder: "Select products...",
+            dataTextField: "text",
+            dataValueField: "value",
+
+            filtering: onFiltering,
+            deselect: onDeselect,
+            select: onSelect,
+            change: onChange,
+            close: onClose,
+            open: onOpen,
+
+            autoBind: false,
+            dataSource: data,
+        });
+        }
+        getData();
+    // });
+
+
+
+
+</script>
+
+</body>
+</html>

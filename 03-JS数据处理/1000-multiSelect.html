@@ -1,0 +1,63 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-05-29 10:41:15
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-29 13:58:45
+ * @Description: file content
+ * @FilePath: \MyTools\03-JS数据处理\1000-multiSelect.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-1.12.4.js"></script>
+    <style>
+        #multiSelect{ 
+            width: 400px;
+            height: 200px;
+            background-color: yellow;
+            opacity: 0.3;
+        }
+
+        #selectInput{
+            width: 400px;
+            height: 30px;
+        }
+        #selectView{
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="multiSelect">
+        <input type="text" id="selectInput" oninput="changeInputValue(this,value)">
+        
+        <select id="selectView" >
+            <option value ="val1">1</option>
+            <option value ="val2">2</option>
+            <option value ="val3">3</option>
+            <option value ="val4">4</option>
+            <option value ="val5">5</option>
+            <option value ="val6">6</option>
+            <option value ="val7">7</option>
+            <option value ="val8">8</option>
+            <option value ="val9">9</option>
+            <option value ="val10">10</option>
+            <option value ="val11">11</option>
+            <option value ="val12">12</option>
+            <option value ="val13">13</option>
+            <option value ="val14">14</option>
+            <option value ="val15">15</option>
+           
+          </select>
+        
+    </div>
+</body>
+<script>
+    function changeInputValue(obj,value){
+        this.getSelectData();
+    }
+</script>
+</html>

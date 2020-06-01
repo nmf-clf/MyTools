@@ -1,3 +1,11 @@
+/*
+ * @Author: niumengfei
+ * @Date: 2020-01-20 17:09:41
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-25 16:19:50
+ * @Description: file content
+ * @FilePath: \MyTools\31-ReactApp\admin\src\common\layout\index.js
+ */ 
 import React,{ Component } from 'react';
 import { Layout } from 'antd';
 import './index.less';
@@ -12,6 +20,14 @@ class MyLayout extends Component{
         this.state = {
             
         }
+        console.info('SideMenu-constructor...',this.state,this.props)
+    }
+    componentDidMount(){
+        console.info('SideMenu-componentDidMount...',this.state,this.props)
+    }
+    
+    componentWillReceiveProps(nextProps){
+        console.info('SideMenu-componentWillReceiveProps...',this.state,this.props)
     }
     gettoggle = (collapsed) =>{
         this.setState({
@@ -19,6 +35,8 @@ class MyLayout extends Component{
         })
     }
     render(){
+        console.log('this.props.children...',this.props.children)
+        console.info('render...',this.state,this.props)
         return (
             <div className="Layout">
                 <Layout>

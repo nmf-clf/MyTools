@@ -1,0 +1,57 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-05-28 16:36:17
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-05-28 17:14:04
+ * @Description: file content
+ * @FilePath: \MyTools\03-JS数据处理\996-动态下拉框.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="js/kendo.common.min.css" />
+    <link rel="stylesheet" href="js/kendo.default.min.css" />
+    <link rel="stylesheet" href="js/22222222.css" />
+    <link rel="stylesheet" href="js/kendo.default-v2.min.css" />
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/kendo.web.min.js"></script>
+</head>
+<body>
+    <input id='input' type="text">
+    <div id="example" >
+        <div class="demo-section k-content">
+            <h4>Products</h4>
+            <select id="products"></select>
+        </div>
+       
+    </div>
+</body>
+<script>
+
+        $(document).ready(function() {
+            $("#products").kendoMultiSelect({
+                placeholder: "Select products...",
+                dataTextField: "ProductName",
+                dataValueField: "ProductID",
+                autoBind: false,
+                dataSource: {
+                    type: "odata",
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                        }
+                    }
+                },
+                value: [
+                    { ProductName: "Chang", ProductID: 2 },
+                    { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
+                ]
+            });
+        });
+    
+</script>
+</html>

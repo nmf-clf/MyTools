@@ -1,3 +1,4 @@
+
 let Moudle = require('./002-module');
 
 // console.log(Moudle.name);
@@ -15,9 +16,11 @@ fs.readdir('./',(err,data)=>{
     }
 })
 
+// console.log( fs.readdirSync('./11') )
+
 //同步读取
 try{
-    console.log( fs.readdirSync('./111') )
+    console.log( fs.readdirSync('./11') )
 }catch(err){
     console.info('程序异常',err)
 }

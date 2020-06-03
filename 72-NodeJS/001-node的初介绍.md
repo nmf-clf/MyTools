@@ -58,4 +58,11 @@
 ### 内置模块url
   url 统一资源定位符
 
+  url.parse() 字符串转对象
+  url.format() 对象转字符串
+  json是一种数据格式,json对象是保证json格式的对象,json字符串是json格式的字符串
 
+### 内置模块querystring
+  query字符串和对象相互转化,及编码相互转化
+
+### 邮箱验证

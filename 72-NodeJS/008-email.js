@@ -2,12 +2,13 @@
  * @Author: niumengfei
  * @Date: 2020-06-02 15:39:20
  * @LastEditors: niumengfei
- * @LastEditTime: 2020-06-02 16:22:04
+ * @LastEditTime: 2020-06-03 11:54:09
  * @Description: file content
  * @FilePath: \MyTools\72-NodeJS\008-email.js
  */ 
 "use strict";
 const nodemailer = require("nodemailer");
+
 
 // 创建发送邮箱的对象-create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -37,5 +38,6 @@ transporter.sendMail(mailObj,(err,data)=>{
         console.log('success::',data)
     }
 })
+
 
 

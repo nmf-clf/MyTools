@@ -63,6 +63,42 @@
   json是一种数据格式,json对象是保证json格式的对象,json字符串是json格式的字符串
 
 ### 内置模块querystring
-  query字符串和对象相互转化,及编码相互转化
+   query字符串和对象相互转化,及编码相互转化
 
 ### 邮箱验证
+   + nodemailer 可以实现发邮件
+
+### 简易爬虫案例
+   + npm i cheerios --save 
+
+### 网络基本知识
+  + web服务器
+  + api服务器
+  
+### express框架
+  + npm i express --save    
+  模块(第三方模块)的引用,会从当前的node_moudles向上查找
+
+  + 如果在express框架中想要解析post请求的参数，需要用到body-parser第三方模块
+    npm i body-parser --save
+
+### 服务器相关
+  + 1.服务器就是一台电脑 2.服务器软件(apach tomcat iis nginx node) 3.服务器ip 端口号(默认80)
+  + 局域网 
+  + 外网 
+    ip: 确定服务器的位置
+    端口: 确定服务器里某个程序
+
+# api接口的书写
+  + 接收数据
+  - get req.query
+  - get req.body 需要body-parser第三方中间件解析
+    + 注意数据格式 json x-www-form-urencode formdata
+
+### 中间件 middlewear
+  + 内置中间件 static
+  + 自定义中间件
+  + 第三方中间件 (body-parser) (拦截器)
+
+### 静态资源目录 static
+  指定一个目录 该目录可以被访问  等同于apache (www)

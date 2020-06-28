@@ -2,7 +2,7 @@
  * @Author: niumengfei
  * @Date: 2020-06-03 16:28:18
  * @LastEditors: niumengfei
- * @LastEditTime: 2020-06-04 17:29:20
+ * @LastEditTime: 2020-06-05 09:40:03
  * @Description: file content
  * @FilePath: \MyTools\72-NodeJS\002-express\002-server.js
  */ 
@@ -12,11 +12,11 @@ const app = express();
 const port = 3001
 
 app.use('/',(req,res,next)=>{ //拦截器
-    const { query } = req;
-    if(query.name == 'nmf'){
+    const { token } = req.query;
+    if(token){
         next()
     }else{
-        res.send('无效的名称')
+        res.send('缺少token')
     }
 })
 

@@ -1,0 +1,41 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-06-19 11:39:41
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-06-19 14:37:18
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>001-原型和原型链1</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Person(){
+        value22222:'niumengfei'
+    }
+    // Person.prototype.name = 'niumengfei'
+    
+    var obj = {
+        name:'tom'
+    }
+    var person = new Person();
+    console.log('原型的prototype指向实例的__proto__::',Person.prototype === person.__proto__,Person.prototype)
+    console.log('原型上的constructor指向构造函数::',Person.prototype.constructor === Person)
+    console.log('实例的原型指向可以指向构造函数::',person.constructor === Person)
+    console.log('==',person)
+    console.log('00',person.constructor)
+    console.log('11',person.__proto__.constructor)
+    console.log('构造函数的原型::',Person.prototype)
+    console.log('Person构造函数的原型对象的原型指向了Object构造函数的原型对象',Person.prototype.__proto__ === Object.prototype)
+    console.log('Objec构造函数::',Object)
+    var newObj = new Object();
+    console.log('Objec构造函数的原型对象::',Object.prototype,Person.prototype)
+    console.log('Object的实例对象::',newObj)
+    console.log('obj::',obj)
+</script>
+</html>

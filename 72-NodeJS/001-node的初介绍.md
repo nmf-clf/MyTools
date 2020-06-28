@@ -97,8 +97,47 @@
 
 ### 中间件 middlewear
   + 内置中间件 static
-  + 自定义中间件
+  + 自定义中间件 （全局 局部）
   + 第三方中间件 (body-parser) (拦截器)
 
 ### 静态资源目录 static
   指定一个目录 该目录可以被访问  等同于apache (www)
+
+### promise
+  如果有大量的异步操作，需要顺序执行，通过回调方式执行，就会陷入回调地狱。
+
+  通过promise解决回调地狱问题 
+
+  1、封装promise函数
+  ```
+    function 函数名(){
+      return new Promise((resolve,reject)=>{
+        //需要的异步处理
+        成功的时候 resolve
+        失败的时候 reject
+      })
+    }
+  ```
+  2、根据顺序 形成链式调用 
+    函数名().then().then().catch()
+  3、 捕获错误  
+
+### api doc插件
+  npm install 
+  apidoc -i ./ -o ./hehe
+
+### curd
+  1. 增加 
+  2. 查询分类
+  3. 关键字查询 find.( {name:{ $regex:new RegExp(kw) }} ) 
+  4. 分页查询
+  5. 删除 foodModel.remove({id:'xxx'})  foodModel.remove({id:['xxx1','xxx2','xxx3]})
+  6. 修改
+  7. 上传图片
+  foodModel.find().limit(pageSize).skip( (pageIndex-1)*pageSize )
+
+### 跨域
+  同源策略 （协议 ip  端口号) 35 一半
+
+
+

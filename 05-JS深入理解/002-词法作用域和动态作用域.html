@@ -1,0 +1,52 @@
+<!--
+ * @Author: niumengfei
+ * @Date: 2020-06-19 16:53:05
+ * @LastEditors: niumengfei
+ * @LastEditTime: 2020-06-19 17:19:41
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>002-作用域</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // var scope = "global scope";
+    // function checkscope(){
+    //     var scope = "local scope";
+    //     function f(){
+    //         return scope;
+    //     }
+    //     return f();
+    // }
+    // console.log(checkscope());
+
+    // var scope2 = "global scope2";
+    // function checkscope2(){
+    //     var scope2 = "local scope2";
+    //     function f(){
+    //         return scope2;
+    //     }
+    //     return f;
+    // }
+    // console.log( checkscope2()() );
+
+    var value = 1;
+    function fn2(){
+        console.log('2',value)
+    }
+    function fn(){
+        var value = 2;
+        console.log('1',value)
+        fn2()
+        console.log('3',value)
+    }
+    fn();
+
+
+</script>
+</html>

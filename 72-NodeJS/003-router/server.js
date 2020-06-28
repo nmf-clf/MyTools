@@ -2,7 +2,7 @@
  * @Author: niumengfei
  * @Date: 2020-06-04 14:37:26
  * @LastEditors: niumengfei
- * @LastEditTime: 2020-06-04 17:22:43
+ * @LastEditTime: 2020-06-05 11:20:05
  * @Description: file content
  * @FilePath: \MyTools\72-NodeJS\003-router\server.js
  */ 
@@ -20,10 +20,12 @@ const path = require('path');
 const app = express();
 const port = 3001
 
-console.log(__dirname)
-console.log(path.join())
+let userRouter = require('./router/userRouter')
+let foodRouter = require('./router/foodRouter')
 
- 
+app.use('/user',userRouter)
+app.use('/food',foodRouter)
+
 //监听 端口 开启服务器
 app.listen(port, () => { 
     console.log(`app is running at port:${port}`)
